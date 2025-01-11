@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "J2vk15bmF/wqIjEcwYU/TGSalpQW5yBHmtrzfzKlEJCYVAfCNGfEquElVXT4k/Yz8klqEly0a3MUsC//YMMBJg==",
+  "dgSpecHash": "ek4a2CBLhlxLSlMKLpsAvRA1Xms4PJYUxs8HLgcXIFiR3IpDtoVwu2laFtRX1rR2YeRjHbgY0KbIqyC40Ua32A==",
   "success": true,
-  "projectFilePath": "c:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\ApiShop.csproj",
+  "projectFilePath": "C:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\ApiShop.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\aliry\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\aliry\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

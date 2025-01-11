@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApiShop{
 
-    public class ProductsControllers:ControllerBase{
+    public class ProductsController:ControllerBase{
         private readonly DataBaseContext _context;
 
-        public ProductsControllers(DataBaseContext context){
+        public ProductsController(DataBaseContext context){
             _context = context;
         }
 
@@ -20,10 +20,11 @@ namespace ApiShop{
         }
         [HttpGet]
         [Route("/product/{id}")]
-        public   IActionResult GetOneProduct(int id){
-            var dane =  _context.Products
+        public async  Task<IActionResult> GetOneProduct(int id){
+            var dane = await  _context.Products
             .Where(p=>p.Id==id)
-            .Include(p=>p.Sizes);
+            .Include(p=>p.Sizes)
+            .ToListAsync();
             return Ok(dane);
         }
         [HttpPut]
