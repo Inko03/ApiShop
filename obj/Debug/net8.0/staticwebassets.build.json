@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "AbPD7cXhN2vrPF+Wy8o7xnPkDtX8e+AkGQTPg6bL0no=",
+  "Hash": "oSu9yI6pcB9ksPvGcFKVL83pNcD73xTNGVwngDEpZSw=",
   "Source": "ApiShop",
   "BasePath": "_content/ApiShop",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

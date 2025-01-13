@@ -5226,31 +5226,29 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\aliry\\.nuget\\packages\\": {},
+    "C:\\Users\\Mateusz\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\ApiShop.csproj",
+      "projectUniqueName": "C:\\Users\\Mateusz\\Desktop\\Projekty\\ApiShop\\ApiShop\\ApiShop.csproj",
       "projectName": "ApiShop",
-      "projectPath": "C:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\ApiShop.csproj",
-      "packagesPath": "C:\\Users\\aliry\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\obj\\",
+      "projectPath": "C:\\Users\\Mateusz\\Desktop\\Projekty\\ApiShop\\ApiShop\\ApiShop.csproj",
+      "packagesPath": "C:\\Users\\Mateusz\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Mateusz\\Desktop\\Projekty\\ApiShop\\ApiShop\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\aliry\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\Mateusz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -5263,7 +5261,13 @@
         "warnAsError": [
           "NU1605"
         ]
-      }
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net8.0": {
@@ -5311,7 +5315,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

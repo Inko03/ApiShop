@@ -12,7 +12,7 @@ builder.Services.AddControllers()
     });
 //Add database context to program
 builder.Services.AddDbContext<DataBaseContext>(options =>
-options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;")
+options.UseSqlServer("Server=localhost;Database=MyDataBase;Trusted_Connection=True;TrustServerCertificate=True;")
 );
 
 var app = builder.Build();
