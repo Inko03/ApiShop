@@ -1,34 +1,24 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiShop{
+    [Route("/items")]
     public class CartController:ControllerBase{
-        private readonly DataBaseContext dataBaseContext;
-
-        public CartController(DataBaseContext _dataBaseContext){
-            dataBaseContext = _dataBaseContext;
+        private readonly CartServices cartServices;
+        public CartController(CartServices _cartServices){
+            cartServices = _cartServices;
         }
-        [HttpPut]
-        [Route("/items")]
-        public IActionResult AddItem ([FromBody] CartItemDto item){
-            var dane = new Cart{
-                UserId = 1
-            };
-            dane.CartItems.Add(new CartItem{
-                ProductId = item.ProductId,
-                Quantity = item.Quantity
-            }
-            );
-            dataBaseContext.Cart.AddAsync(dane);
-            return Ok(item);
+        [HttpPut("{id}")]
+        public async Task<IActionResult> AddItem ([FromBody] List<CartItemDto> items, [FromRoute] int id){
+            var result = await cartServices.AddNewCart(items,id);
+            return Ok(result);
         }
-        [HttpDelete]
-        [Route("/items/{id}")]
+        [HttpDelete("{id}")]
         public IActionResult DeleteItem([FromRoute] int id){
 
             return Ok($"Delete id:{id}");
         }
         [HttpGet]
-        [Route("/items")]
         public IActionResult GetItems(){
             return Ok();
         }
