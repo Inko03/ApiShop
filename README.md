@@ -32,11 +32,8 @@ If any error occurs, it will return only a message to you. The possible status i
 </br>
 The format of the returned data is as follows:
 
-{
-  "status": "error",
-  "message": "Something went wrong",
-   "errorCode": 500
-}
+![image](https://github.com/user-attachments/assets/ec7506b3-fd05-4712-bf17-f7c917a63b99)
+
 
 
 ## Endpoint at  [/users/in](#users/in) | Method: POST
@@ -54,8 +51,5 @@ If any error occurs, it will return only a message to you. The possible status i
 </br>
 The format of the returned data is as follows:
 
-{
-"status":"error",
-"message":"Some text",
-"errorCorde":200
-}
+![image](https://github.com/user-attachments/assets/2c4ccbcd-5a87-420c-b314-f3b2c854f07f)
+
