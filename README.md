@@ -15,11 +15,15 @@ ApiShop - a REST API written in .NET for an online shop.
 * [ProductController](#ProductController)
 * [UserController](#UserController)
 
-## CartController 
- * endpoint at  [/items](#items) | Method: POST
-- it recive format data is following:
+## UserController
+* endpoint at  [/users](#users) | Method: POST
+* it register user to database
+
+
+-  recive format data is following:
   
-![image](https://github.com/user-attachments/assets/134222d7-2e7d-41ec-b1f2-5dda07842d3e)
+![image](https://github.com/user-attachments/assets/2d34117c-0f2f-4f24-83d6-c2eabe09eb4d)
+
 
 
 
