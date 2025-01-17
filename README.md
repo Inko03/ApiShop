@@ -24,7 +24,7 @@ ApiShop - a REST API written in .NET for an online shop.
   
 ![image](https://github.com/user-attachments/assets/2d34117c-0f2f-4f24-83d6-c2eabe09eb4d)
 
-if any error will occure it return only messege to you and posible status is:
+If any error occurs, it will return only a message to you. The possible status is:
 * 200 Ok
 * 400 Bad request 
 * 401 Unauthorized
