@@ -16,4 +16,4 @@ ApiShop - a REST API written in .NET for an online shop.
 * [UserController](#UserController)
 
 ## CartController 
- * endpoint at  [/items] | Method: GET
+ * endpoint at  [/items](#items) | Method: GET
