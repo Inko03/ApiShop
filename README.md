@@ -20,12 +20,12 @@ ApiShop - a REST API written in .NET for an online shop.
 * it register user to database
 
 
--  recive format data is following:
+- expect the following format data:
   
 ![image](https://github.com/user-attachments/assets/2d34117c-0f2f-4f24-83d6-c2eabe09eb4d)
 
-
-
-
-}
+if any error will occure it return only messege to you and posible status is:
+* 200 Ok
+* 400 Bad request 
+* 401 Unauthorized
 
