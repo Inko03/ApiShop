@@ -30,6 +30,7 @@ If any error occurs, it will return only a message to you. The possible status i
 * 200 Ok
 * 400 Bad request 
 * 401 Unauthorized
+</br>
 The format of the returned data is as follows:
 
 {
