@@ -36,6 +36,6 @@ The format of the returned data is as follows:
 {
   "status": "error",
   "message": "Something went wrong",
-  "errorCode": 500
+   "errorCode": 500
 }
 
