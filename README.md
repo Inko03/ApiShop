@@ -18,7 +18,7 @@ It is still in development
 * [UserController](#UserController)
 
 ## UserController
-* endpoint at  [/users](#users) | Method: POST
+## Endpoint at  [/users](#users) | Method: POST
 * it register user to database
 
 - expect the following format data:
@@ -39,7 +39,7 @@ The format of the returned data is as follows:
 }
 
 
-* endpoint at  [/users/in](#users/in) | Method: POST
+## Endpoint at  [/users/in](#users/in) | Method: POST
 * it login user
 
 - expect the following format data:
