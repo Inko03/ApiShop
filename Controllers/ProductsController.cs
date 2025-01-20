@@ -7,20 +7,23 @@ namespace ApiShop{
 [Route("products")]
     public class ProductsController:ControllerBase{
         private readonly ProductServices _product;
-        public ProductsController(ProductServices product){
+        private readonly MessageServices _messageServices;
+        public ProductsController(ProductServices product, MessageServices messageServices){
             _product = product;
+            _messageServices = messageServices;
         }
 
         [HttpGet]
         public async  Task<IActionResult> AllProducts(){
             var dane =  await _product.GetAllProduct();
-            return Ok(dane);
+            return Ok(_messageServices.DataSender("none", dane));
         }
         [HttpGet("{id}")]
         public async  Task<IActionResult> GetOneProduct(int id){
             var dane = await _product.GetOneProduct(id);
-            return Ok(dane);
+            return Ok(new{error="none",data=dane});
         }
+        //Only admin shuld add a item
         [HttpPost("add")]
         [Authorize]
         public async Task<IActionResult> AddProductToDataBase([FromBody]ProductModel product){
@@ -29,10 +32,10 @@ namespace ApiShop{
                 .SelectMany(p=>p.Value.Errors)
                 .Select(p=>p.ErrorMessage)
                 .FirstOrDefault();
-                return BadRequest(state);
+                return BadRequest(_messageServices.Message("error",state));
             }
             await _product.AddProductToDatabase(product);
-            return CreatedAtAction(nameof(GetOneProduct),new{id=product.Id,Name=product.Name});
+            return Ok(_messageServices.Message("created",product.Name));
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProductFromDataBase(int id){

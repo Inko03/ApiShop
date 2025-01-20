@@ -6,8 +6,10 @@ using Microsoft.EntityFrameworkCore;
 [Route("/order")]
 public class OrderController:ControllerBase{
     private readonly OrderServices orderServices;
-    public OrderController(OrderServices _orderServices){
+    private readonly MessageServices _messageServices;
+    public OrderController(OrderServices _orderServices,MessageServices messageServices){
         orderServices = _orderServices;
+        _messageServices = messageServices;
     }
 
 [HttpPost]
@@ -27,7 +29,7 @@ public async Task<IActionResult> EditOrderStatus([FromBody] UpdataOrderStatus dt
         .SelectMany(p=>p.Value.Errors)
         .Select(p=>p.ErrorMessage)
         .FirstOrDefault();
-        return BadRequest(state); 
+        return BadRequest(_messageServices.Message("error", state)); 
     }
     var result = await orderServices.EditDataInDatabse(dto,id);
     return Ok(result); 

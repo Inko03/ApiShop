@@ -17,6 +17,7 @@ builder.Services.AddScoped<ProductServices>();
 builder.Services.AddScoped<OrderServices>();
 builder.Services.AddScoped<CartServices>();
 builder.Services.AddScoped<TokenServices>();
+builder.Services.AddScoped<MessageServices>();
 builder.Services.AddHttpContextAccessor();
 //adding authentication
 builder.Services.AddAuthentication(options=>

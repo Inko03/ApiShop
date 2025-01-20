@@ -23,7 +23,10 @@ public class ErrorMiddleware{
         };
         context.Response.ContentType = "application/json";
         context.Response.StatusCode =   (int)statusCode;
-
-        await context.Response.WriteAsJsonAsync(exception.Message);
+        var message = new{
+            status = "error",
+            message = exception.Message
+        };
+        await context.Response.WriteAsJsonAsync(message);
     }
 }
