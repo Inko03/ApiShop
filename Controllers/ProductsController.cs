@@ -21,12 +21,18 @@ namespace ApiShop{
         [HttpGet("{id}")]
         public async  Task<IActionResult> GetOneProduct(int id){
             var dane = await _product.GetOneProduct(id);
-            return Ok(new{error="none",data=dane});
+            return Ok(new{status="succes",data=dane});
         }
         //Only admin shuld add a item
         [HttpPost("add")]
-        [Authorize]
-        public async Task<IActionResult> AddProductToDataBase([FromBody]ProductModel product){
+        public async Task<IActionResult> AddProductToDataBase([FromForm]ProductUploadModel product){
+            if(product.File==null){
+                return BadRequest(_messageServices.Message("error","No file here"));
+            }
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", product.File.FileName);
+            using(var stream = new FileStream(filePath,FileMode.Create)){
+                await product.File.CopyToAsync(stream);
+            }
             if(!ModelState.IsValid){
                 var state = ModelState
                 .SelectMany(p=>p.Value.Errors)

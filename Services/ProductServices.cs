@@ -8,14 +8,21 @@ public class ProductServices{
     public ProductServices(DataBaseContext _databaseContext){
         dataBaseContext = _databaseContext;
     }
-    public async Task AddProductToDatabase(ProductModel product){
+    public async Task AddProductToDatabase(ProductUploadModel product){
         var result = await dataBaseContext.Products
         .FirstOrDefaultAsync(p=>p.Name==product.Name);
         if(result!=null){
             throw new InvalidDataException("Product with that name alredy in database");
         }
         try{
-            await dataBaseContext.AddAsync(product);
+            var dane =new ProductModel{
+                Name = product.Name,
+                Price = product.Price,
+                Category = product.Category,
+                Sizes = product.Sizes,
+                FilePath = $"C:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\wwwroot\\uploads\\{product.File.FileName}"
+            };
+            await dataBaseContext.Products.AddAsync(dane);
             await dataBaseContext.SaveChangesAsync();
         }catch{
             throw new Exception("Same problem when adding product");

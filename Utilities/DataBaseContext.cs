@@ -14,6 +14,7 @@ public DbSet<CartItem> cartItems{get;set;}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        
         modelBuilder.Entity<ProductModel>()
         .HasMany(p=>p.Sizes)
         .WithOne()

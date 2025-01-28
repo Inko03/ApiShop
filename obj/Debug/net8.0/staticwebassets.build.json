@@ -1,12 +1,39 @@
 {
   "Version": 1,
-  "Hash": "oSu9yI6pcB9ksPvGcFKVL83pNcD73xTNGVwngDEpZSw=",
+  "Hash": "B4yob+zD6jdqxTXweu1bG7xq1tr6RNyVzdZ7vCX0xqw=",
   "Source": "ApiShop",
   "BasePath": "_content/ApiShop",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "ApiShop\\wwwroot",
+      "Source": "ApiShop",
+      "ContentRoot": "c:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\wwwroot\\",
+      "BasePath": "_content/ApiShop",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "c:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\wwwroot\\uploads\\aa11.PNG",
+      "SourceId": "ApiShop",
+      "SourceType": "Discovered",
+      "ContentRoot": "c:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\wwwroot\\",
+      "BasePath": "_content/ApiShop",
+      "RelativePath": "uploads/aa11.PNG",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\aa11.PNG"
+    }
+  ]
 }

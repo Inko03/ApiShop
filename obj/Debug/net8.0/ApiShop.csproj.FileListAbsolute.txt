@@ -519,3 +519,4 @@ c:\Users\Mateusz\Desktop\Projekty\ApiShop\obj\Debug\net8.0\refint\ApiShop.dll
 c:\Users\Mateusz\Desktop\Projekty\ApiShop\obj\Debug\net8.0\ApiShop.pdb
 c:\Users\Mateusz\Desktop\Projekty\ApiShop\obj\Debug\net8.0\ApiShop.genruntimeconfig.cache
 c:\Users\Mateusz\Desktop\Projekty\ApiShop\obj\Debug\net8.0\ref\ApiShop.dll
+c:\Users\aliry\Desktop\Projekty\ApiShop\bin\Debug\net8.0\ApiShop.staticwebassets.runtime.json

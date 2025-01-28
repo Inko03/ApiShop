@@ -4,14 +4,14 @@ public class MessageServices {
 
 public object Message(string errorStatus, string errorMessage){
     var dane = new{
-        error = errorStatus,
+        status = errorStatus,
         message = errorMessage
     };
     return dane;
 }
 public object DataSender(string errorStatus,List<ProductModel> product){
     var dane = new{
-        error = errorStatus,
+        status = errorStatus,
         data = product
     };
     return dane;

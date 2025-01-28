@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiShop.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20250114153753_NewModels")]
-    partial class NewModels
+    [Migration("20250128150148_newFilePath")]
+    partial class newFilePath
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,12 +32,20 @@ namespace ApiShop.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("DatePut")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId1")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Cart");
                 });
@@ -91,7 +99,8 @@ namespace ApiShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CartId");
+                    b.HasIndex("CartId")
+                        .IsUnique();
 
                     b.ToTable("Orders");
                 });
@@ -108,12 +117,16 @@ namespace ApiShop.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -154,6 +167,7 @@ namespace ApiShop.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
@@ -175,30 +189,32 @@ namespace ApiShop.Migrations
             modelBuilder.Entity("Cart", b =>
                 {
                     b.HasOne("User", "User")
-                        .WithMany("Carts")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("User", null)
+                        .WithMany("Carts")
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("CartItem", b =>
                 {
-                    b.HasOne("Cart", "Cart")
+                    b.HasOne("Cart", null)
                         .WithMany("CartItems")
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Cart");
                 });
 
             modelBuilder.Entity("Orders", b =>
                 {
                     b.HasOne("Cart", "Cart")
-                        .WithMany()
-                        .HasForeignKey("CartId")
+                        .WithOne("Order")
+                        .HasForeignKey("Orders", "CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -207,18 +223,19 @@ namespace ApiShop.Migrations
 
             modelBuilder.Entity("ProductSize", b =>
                 {
-                    b.HasOne("ProductModel", "ProductModel")
+                    b.HasOne("ProductModel", null)
                         .WithMany("Sizes")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ProductModel");
                 });
 
             modelBuilder.Entity("Cart", b =>
                 {
                     b.Navigation("CartItems");
+
+                    b.Navigation("Order")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ProductModel", b =>

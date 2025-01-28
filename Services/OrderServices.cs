@@ -24,12 +24,15 @@ public class OrderServices{
     }
     public async Task<Orders> AddOrder(Cart cart){
         var items = cart.CartItems;
-        double totalPrice = 0;
+        decimal totalPrice = 0;
         foreach (var item in items)
         {
-            totalPrice = Math.Round(context.Products
-            .Where(p=>p.Id==item.ProductId)
-            .Sum(p=>p.Price*item.Quantity),2);
+        var total = context.Products
+            .Where(p => p.Id == item.ProductId)
+            .Select(p => (decimal)p.Price * (decimal)item.Quantity)
+            .ToList();
+
+        totalPrice = Math.Round(total.Sum(), 2);
         }
         var order = new Orders{
             UserId = cart.UserId,

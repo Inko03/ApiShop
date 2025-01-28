@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class ProductModel{
+public class ProductUploadModel{
 
     public int Id {get;set;}
     [Required(ErrorMessage ="{0} is require")]
@@ -14,12 +14,6 @@ public class ProductModel{
     [Required(ErrorMessage ="{0} is require")]
     public virtual  List<ProductSize> Sizes {get;set;}
 
-    [Required(ErrorMessage ="{0} is require")]
-    public string FilePath{get;set;}
-}
-
-public class ProductSize{
-    public int Id{get;set;}
-    public int Size{get;set;}
-    public int ProductId{get;set;}
+    [NotMapped]
+    public IFormFile File{get;set;}
 }
