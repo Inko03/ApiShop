@@ -26,6 +26,7 @@ namespace ApiShop{
         //Only admin shuld add a item
         [HttpPost("add")]
         public async Task<IActionResult> AddProductToDataBase([FromForm]ProductUploadModel product){
+        // develop
             if(product.File==null){
                 return BadRequest(_messageServices.Message("error","No file here"));
             }
@@ -33,6 +34,7 @@ namespace ApiShop{
             using(var stream = new FileStream(filePath,FileMode.Create)){
                 await product.File.CopyToAsync(stream);
             }
+        //develop-------> AddProductToDatabase
             if(!ModelState.IsValid){
                 var state = ModelState
                 .SelectMany(p=>p.Value.Errors)
