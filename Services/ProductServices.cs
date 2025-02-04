@@ -15,7 +15,7 @@ public class ProductServices{
             throw new InvalidDataException("Product with that name alredy in database");
         }
         if(product.File.Length>10*1024*1024){
-            
+
         }
         try{
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", product.File.FileName);
@@ -27,7 +27,7 @@ public class ProductServices{
                 Price = product.Price,
                 Category = product.Category,
                 Sizes = product.Sizes,
-                FilePath = $"{Directory.GetCurrentDirectory()}\\wwwroot\\uploads\\{product.File.FileName}"
+                FilePath = filePath
             };
             await dataBaseContext.Products.AddAsync(dane);
             await dataBaseContext.SaveChangesAsync();

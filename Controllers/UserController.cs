@@ -13,7 +13,7 @@ namespace ApiShop{
             contextAccessor = _contextAccesor;
             _messageServices = messageServices;
         }
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> RegisterUser([FromBody]User user){
             if(!ModelState.IsValid){
                 var state = ModelState
@@ -28,7 +28,7 @@ namespace ApiShop{
             }
             return BadRequest(_messageServices.Message("error","Some error"));
         }
-        [HttpPost("in")]
+        [HttpPost]
         public async Task<IActionResult> LoginUser([FromBody] UserDto user ){
             if(!ModelState.IsValid){
                 var state = ModelState
@@ -46,6 +46,16 @@ namespace ApiShop{
                 };
                 contextAccessor.HttpContext?.Response.Cookies.Append("AuthToken", $"{result}", cookieOptions);
                 return Ok(_messageServices.Message("none", "User login"));
+        }
+        [HttpPost("logout")]
+        public async Task LogOut(){
+            contextAccessor.HttpContext.Response.Cookies.Append("AuthToken","",new CookieOptions{
+                Expires = DateTime.UtcNow.AddDays(-1),
+                HttpOnly = true,
+                Secure = false,
+                SameSite = SameSiteMode.Strict,
+                Path = "/"
+            });
         }
     }
 }

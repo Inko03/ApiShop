@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,8 +9,9 @@ namespace ApiShop{
         public CartController(CartServices _cartServices){
             cartServices = _cartServices;
         }
-        [HttpPut("{id}")]
-        public async Task<IActionResult> AddItem ([FromBody] List<CartItemDto> items, [FromRoute] int id){
+        [HttpPut]
+        public async Task<IActionResult> AddItem ([FromBody] List<CartItemDto> items){
+            var id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var result = await cartServices.AddNewCart(items,id);
             return Ok(result);
         }
