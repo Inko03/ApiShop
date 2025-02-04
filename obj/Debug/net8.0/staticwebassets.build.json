@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "B4yob+zD6jdqxTXweu1bG7xq1tr6RNyVzdZ7vCX0xqw=",
+  "Hash": "aP029ZiMpee/yqk6qzTAe1hbBn8dT2iUbzGZR7XrUus=",
   "Source": "ApiShop",
   "BasePath": "_content/ApiShop",
   "Mode": "Default",
@@ -17,12 +17,12 @@
   ],
   "Assets": [
     {
-      "Identity": "c:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\wwwroot\\uploads\\aa11.PNG",
+      "Identity": "c:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\wwwroot\\uploads\\BestWorld.png",
       "SourceId": "ApiShop",
       "SourceType": "Discovered",
       "ContentRoot": "c:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\wwwroot\\",
       "BasePath": "_content/ApiShop",
-      "RelativePath": "uploads/aa11.PNG",
+      "RelativePath": "uploads/BestWorld.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -33,7 +33,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\aa11.PNG"
+      "OriginalItemSpec": "wwwroot\\uploads\\BestWorld.png"
     }
   ]
 }

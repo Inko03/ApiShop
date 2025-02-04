@@ -1,8 +1,8 @@
 {
   "Files": [
     {
-      "Id": "c:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\wwwroot\\uploads\\aa11.PNG",
-      "PackagePath": "staticwebassets\\uploads\\aa11.PNG"
+      "Id": "c:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\wwwroot\\uploads\\BestWorld.png",
+      "PackagePath": "staticwebassets\\uploads\\BestWorld.png"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.ApiShop.Microsoft.AspNetCore.StaticWebAssets.props",

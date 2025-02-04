@@ -15,5 +15,6 @@ public class ProductUploadModel{
     public virtual  List<ProductSize> Sizes {get;set;}
 
     [NotMapped]
+    [Required(ErrorMessage ="{0} is require")]
     public IFormFile File{get;set;}
 }
