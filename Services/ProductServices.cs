@@ -20,7 +20,7 @@ public class ProductServices{
                 Price = product.Price,
                 Category = product.Category,
                 Sizes = product.Sizes,
-                FilePath = $"C:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\wwwroot\\uploads\\{product.File.FileName}"
+                FilePath = $"wwwroot\\uploads\\{product.File.FileName}"
             };
             await dataBaseContext.Products.AddAsync(dane);
             await dataBaseContext.SaveChangesAsync();

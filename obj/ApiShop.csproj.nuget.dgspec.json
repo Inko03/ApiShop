@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\ApiShop.csproj": {}
+    "C:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\ApiShop.csproj": {}
   },
   "projects": {
-    "c:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\ApiShop.csproj": {
+    "C:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\ApiShop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\ApiShop.csproj",
+        "projectUniqueName": "C:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\ApiShop.csproj",
         "projectName": "ApiShop",
-        "projectPath": "c:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\ApiShop.csproj",
+        "projectPath": "C:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\ApiShop.csproj",
         "packagesPath": "C:\\Users\\aliry\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\obj\\",
+        "outputPath": "C:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
