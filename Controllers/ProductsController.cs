@@ -13,7 +13,7 @@ namespace ApiShop{
             _messageServices = messageServices;
         }
         /// <summary>
-        /// get all products
+        /// Get all products
         /// </summary>
         [HttpGet]
         public async  Task<IActionResult> AllProducts(){
@@ -21,7 +21,7 @@ namespace ApiShop{
             return Ok(_messageServices.DataSender("none", dane));
         }
         /// <summary>
-        /// get one product
+        /// Get one product
         /// </summary>
         [HttpGet("{id}")]
         public async  Task<IActionResult> GetOneProduct(int id){
@@ -29,8 +29,9 @@ namespace ApiShop{
             return Ok(new{status="succes",data=dane});
         }
         /// <summary>
-        /// adding product to databse, only admin 
+        /// Adding product to databse, only admin 
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPost("add")]
         public async Task<IActionResult> AddProductToDataBase([FromForm]ProductUploadModel product){
             if(!ModelState.IsValid){
@@ -44,8 +45,9 @@ namespace ApiShop{
             return Ok(_messageServices.Message("created",product.Name));
         }
         /// <summary>
-        /// delete product from database
+        /// Delete product from database
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProductFromDataBase(int id){
             //if product exist is checkd first in here

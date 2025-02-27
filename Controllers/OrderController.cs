@@ -1,7 +1,6 @@
 using System.Data;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 [Route("/order")]
 public class OrderController:ControllerBase{
@@ -22,6 +21,7 @@ public async Task<IActionResult> GetOrders([FromRoute] int id){
     var result = await orderServices.GetAllOrdersById(id);
     return Ok(result);
 }
+[Authorize(Roles = "Admin")]
 [HttpPost("{id}")]
 public async Task<IActionResult> EditOrderStatus([FromBody] UpdataOrderStatus dto,[FromRoute] int id){
     if(!ModelState.IsValid){

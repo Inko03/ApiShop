@@ -9,8 +9,11 @@ namespace ApiShop{
         public CartController(CartServices _cartServices){
             cartServices = _cartServices;
         }
+        /// <summary>
+        /// Add a new shopping cart, it should be added at the final state
+        /// </summary>
         [HttpPut]
-        public async Task<IActionResult> AddItem ([FromBody] List<CartItemDto> items){
+        public async Task<IActionResult> NewShopCart ([FromBody] List<CartItemDto> items){
             var id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var result = await cartServices.AddNewCart(items,id);
             return Ok(result);
@@ -20,6 +23,9 @@ namespace ApiShop{
 
             return Ok($"Delete id:{id}");
         }
+        /// <summary>
+        /// Return a full shopping cart
+        /// </summary>
         [HttpGet]
         public IActionResult GetItems(){
             return Ok();

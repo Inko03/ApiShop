@@ -30,7 +30,7 @@ public class UserServices{
         await databaseContext.SaveChangesAsync();
         return true;
     }
-    public async Task<string> CorrectPassword(UserDto user){
+    public async Task<string> CheckedUserInDb(UserDto user){
         var userInDb = await databaseContext.Users.FirstOrDefaultAsync(p=>p.Email==user.Email);
         if(userInDb!=null){
             var result = passwordHasher.VerifyHashedPassword(userInDb,userInDb.PasswordHash,user.PasswordHash);

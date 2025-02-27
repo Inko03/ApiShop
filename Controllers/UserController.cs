@@ -1,18 +1,20 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiShop{
     [Route("/users")]
     public class UserController:ControllerBase{
-        private readonly UserServices userServices;
-        private readonly IHttpContextAccessor contextAccessor;
+        private readonly UserServices _userServices;
         private readonly MessageServices _messageServices;
-        public UserController(UserServices _userServices,MessageServices messageServices, IHttpContextAccessor _contextAccesor){
-            userServices = _userServices;
-            contextAccessor = _contextAccesor;
+        public UserController(UserServices userServices,MessageServices messageServices){
+            _userServices = userServices;
             _messageServices = messageServices;
-        }
+        }        
+        /// <summary>
+        /// Register user to database, using a standard User model 
+        /// </summary>
         [HttpPut]
         public async Task<IActionResult> RegisterUser([FromBody]User user){
             if(!ModelState.IsValid){
@@ -20,14 +22,17 @@ namespace ApiShop{
                 .SelectMany(p=>p.Value.Errors)
                 .Select(p=>p.ErrorMessage)
                 .FirstOrDefault();
-                return BadRequest(_messageServices.Message("error login",state));
+                return BadRequest(_messageServices.Message("error",state));
             }
-            var result = await userServices.AddUserToDatabase(user);
+            var result = await _userServices.AddUserToDatabase(user);
             if(result){
                 return Ok(_messageServices.Message("none","User register"));
             }
             return BadRequest(_messageServices.Message("error","Some error"));
         }
+        /// <summary>
+        /// Login user and send back tocken to frontend, using a Dto model of User
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> LoginUser([FromBody] UserDto user ){
             if(!ModelState.IsValid){
@@ -37,25 +42,12 @@ namespace ApiShop{
                 .FirstOrDefault();
                 return BadRequest(_messageServices.Message("login error", state));
             }
-                var result = await userServices.CorrectPassword(user);
-                var cookieOptions = new CookieOptions{
-                    HttpOnly = true,
-                    Secure = false,
-                    SameSite = SameSiteMode.Strict,
-                    Expires = DateTimeOffset.UtcNow.AddDays(1)
-                };
-                contextAccessor.HttpContext?.Response.Cookies.Append("AuthToken", $"{result}", cookieOptions);
-                return Ok(_messageServices.Message("none", "User login"));
+                var token = await _userServices.CheckedUserInDb(user);
+                return Ok(_messageServices.Message("token", $"{token}"));
         }
+        [Authorize]
         [HttpPost("logout")]
         public async Task LogOut(){
-            contextAccessor.HttpContext.Response.Cookies.Append("AuthToken","",new CookieOptions{
-                Expires = DateTime.UtcNow.AddDays(-1),
-                HttpOnly = true,
-                Secure = false,
-                SameSite = SameSiteMode.Strict,
-                Path = "/"
-            });
         }
     }
 }
