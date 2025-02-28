@@ -28,10 +28,10 @@ namespace ApiShop{
             if(result){
                 return Ok(_messageServices.Message("none","User register"));
             }
-            return BadRequest(_messageServices.Message("error","Some error"));
+                return BadRequest(_messageServices.Message("error","Some error"));
         }
         /// <summary>
-        /// Login user and send back tocken to frontend, using a Dto model of User
+        /// Login user and send back tocken, using a Dto model of User
         /// </summary>
         [HttpPost]
         public async Task<IActionResult> LoginUser([FromBody] UserDto user ){
@@ -44,10 +44,6 @@ namespace ApiShop{
             }
                 var token = await _userServices.CheckedUserInDb(user);
                 return Ok(_messageServices.Message("token", $"{token}"));
-        }
-        [Authorize]
-        [HttpPost("logout")]
-        public async Task LogOut(){
         }
     }
 }

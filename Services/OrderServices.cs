@@ -1,24 +1,32 @@
+using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 
 public class OrderServices{
-    private readonly DataBaseContext context;
+    private readonly DataBaseContext _context;
 
-    public OrderServices(DataBaseContext _context){
-        context = _context;
+    public OrderServices(DataBaseContext context){
+        _context = context;
     }
     public async Task<Orders> EditDataInDatabse(UpdataOrderStatus dto, int id){
-        var dane = await context.Orders
+        var dane = await _context.Orders
         .FirstOrDefaultAsync(p=>p.Id==id);
         if(dane==null) throw new NullReferenceException("No product in database");
         dane.Status = dto.status;
-        await context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
         return dane;
     }
-    public async Task<Orders> GetAllOrdersById(int id){
-        var dane = await context.Orders
-        .FirstOrDefaultAsync(p=>p.Id==id);
-        if(dane==null){
-            throw new NullReferenceException("No orders");
+    public async Task<List<Orders>> GetOrders(){
+        var dane = await _context.Orders
+        .Where(p=>p.Id==Int32.Parse(ClaimTypes.NameIdentifier))
+        .ToListAsync();
+        return dane;
+    }
+    public async Task<Orders> GetOrder(int id){
+        var dane = await _context.Orders
+        .Where(o=>o.UserId==Int32.Parse(ClaimTypes.NameIdentifier))
+        .FirstOrDefaultAsync(o=>o.Id==id);
+        if(dane is null){
+            throw new NullReferenceException("No such a order");
         }
         return dane;
     }
@@ -27,7 +35,7 @@ public class OrderServices{
         decimal totalPrice = 0;
         foreach (var item in items)
         {
-        var total = context.Products
+        var total = _context.Products
             .Where(p => p.Id == item.ProductId)
             .Select(p => (decimal)p.Price * (decimal)item.Quantity)
             .ToList();
@@ -40,8 +48,8 @@ public class OrderServices{
             TotalAmount = totalPrice,
             DatePut = cart.DatePut
         };
-        await context.Orders.AddAsync(order);
-        await context.SaveChangesAsync();
+        await _context.Orders.AddAsync(order);
+        await _context.SaveChangesAsync();
         return order;
     }
 }

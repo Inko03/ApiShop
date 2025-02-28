@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,16 +13,11 @@ namespace ApiShop{
         /// <summary>
         /// Add a new shopping cart, it should be added at the final state
         /// </summary>
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> NewShopCart ([FromBody] List<CartItemDto> items){
-            var id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var result = await cartServices.AddNewCart(items,id);
+            var result = await cartServices.AddNewCart(items);
             return Ok(result);
-        }
-        [HttpDelete("{id}")]
-        public IActionResult DeleteItem([FromRoute] int id){
-
-            return Ok($"Delete id:{id}");
         }
         /// <summary>
         /// Return a full shopping cart
