@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 
-public class OrderServices{
+public class OrderServices:IOrderServices{
     private readonly DataBaseContext _context;
 
     public OrderServices(DataBaseContext context){

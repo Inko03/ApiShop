@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 
-public class ProductServices{
+public class ProductServices:IProductServices{
     private readonly DataBaseContext dataBaseContext;
     public ProductServices(DataBaseContext _databaseContext){
         dataBaseContext = _databaseContext;

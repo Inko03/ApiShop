@@ -6,12 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace ApiShop{
     [Route("/users")]
     public class UserController:ControllerBase{
-        private readonly UserServices _userServices;
-        private readonly MessageServices _messageServices;
-        public UserController(UserServices userServices,MessageServices messageServices){
+        private readonly IUserServices _userServices;
+        private readonly IMessageServices _messageServices;
+        public UserController(IUserServices userServices, IMessageServices messageServices){
             _userServices = userServices;
             _messageServices = messageServices;
         }        
+
         /// <summary>
         /// Register user to database, using a standard User model 
         /// </summary>
@@ -22,7 +23,7 @@ namespace ApiShop{
                 .SelectMany(p=>p.Value.Errors)
                 .Select(p=>p.ErrorMessage)
                 .FirstOrDefault();
-                return BadRequest(_messageServices.Message("error",state));
+                return BadRequest(_messageServices.Message("error", state));
             }
             var result = await _userServices.AddUserToDatabase(user);
             if(result){
@@ -30,6 +31,7 @@ namespace ApiShop{
             }
                 return BadRequest(_messageServices.Message("error","Some error"));
         }
+
         /// <summary>
         /// Login user and send back tocken, using a Dto model of User
         /// </summary>

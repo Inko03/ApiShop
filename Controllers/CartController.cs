@@ -6,10 +6,11 @@ using Microsoft.EntityFrameworkCore;
 namespace ApiShop{
     [Route("/items")]
     public class CartController:ControllerBase{
-        private readonly CartServices cartServices;
-        public CartController(CartServices _cartServices){
+        private readonly ICartServices cartServices;
+        public CartController(ICartServices _cartServices){
             cartServices = _cartServices;
         }
+
         /// <summary>
         /// Add a new shopping cart, it should be added at the final state
         /// </summary>
@@ -19,6 +20,7 @@ namespace ApiShop{
             var result = await cartServices.AddNewCart(items);
             return Ok(result);
         }
+        
         /// <summary>
         /// Return a full shopping cart
         /// </summary>

@@ -2,7 +2,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-public class CartServices{
+public class CartServices:ICartServices{
     private readonly DataBaseContext _context;
     
     public CartServices(DataBaseContext context){
@@ -27,6 +27,7 @@ public class CartServices{
         await _context.SaveChangesAsync();
         return user;
     }
+    
     public async Task<Cart> GetCart(){
         var result = await _context.Cart
         .FirstOrDefaultAsync(p=>p.UserId==Int32.Parse(ClaimTypes.NameIdentifier));

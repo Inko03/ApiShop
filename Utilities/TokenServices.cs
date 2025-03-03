@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualBasic;
 
-public class TokenServices{
+public class TokenServices:ITokenServices{
 public string GenerateToken(string name, int id, string role)
 {
     var tokenHandler = new JwtSecurityTokenHandler();

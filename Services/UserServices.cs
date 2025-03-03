@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-public class UserServices{
+public class UserServices:IUserServices{
     private readonly DataBaseContext databaseContext;
     private readonly IPasswordHasher<User> passwordHasher;
-    private readonly TokenServices tokenServices;
-    public UserServices(DataBaseContext _dataBaseContext,TokenServices _tokenServices, IPasswordHasher<User> _passwordHasher){
+    private readonly ITokenServices tokenServices;
+    public UserServices(DataBaseContext _dataBaseContext,ITokenServices _tokenServices, IPasswordHasher<User> _passwordHasher){
         databaseContext = _dataBaseContext;
         passwordHasher = _passwordHasher;
         tokenServices = _tokenServices;

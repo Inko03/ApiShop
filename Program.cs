@@ -12,12 +12,12 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
 
 //adding services
-builder.Services.AddScoped<UserServices>();
-builder.Services.AddScoped<ProductServices>();
-builder.Services.AddScoped<OrderServices>();
-builder.Services.AddScoped<CartServices>();
-builder.Services.AddScoped<TokenServices>();
-builder.Services.AddScoped<MessageServices>();
+builder.Services.AddScoped<IUserServices, UserServices>();
+builder.Services.AddScoped<IProductServices,ProductServices>();
+builder.Services.AddScoped<IOrderServices,OrderServices>();
+builder.Services.AddScoped<ICartServices,CartServices>();
+builder.Services.AddScoped<ITokenServices,TokenServices>();
+builder.Services.AddScoped<IMessageServices,MessageServices>();
 builder.Services.AddHttpContextAccessor();
 //adding authentication
 builder.Services.AddAuthentication(options=>
