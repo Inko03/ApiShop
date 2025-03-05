@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "aP029ZiMpee/yqk6qzTAe1hbBn8dT2iUbzGZR7XrUus=",
+  "Hash": "5iVMhL6fRx0JakmuRprZ4SHU1qX0FNbvZD2PVnkaz90=",
   "Source": "ApiShop",
   "BasePath": "_content/ApiShop",
   "Mode": "Default",
@@ -34,6 +34,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\BestWorld.png"
+    },
+    {
+      "Identity": "c:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\wwwroot\\uploads\\but6.jpg",
+      "SourceId": "ApiShop",
+      "SourceType": "Discovered",
+      "ContentRoot": "c:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\wwwroot\\",
+      "BasePath": "_content/ApiShop",
+      "RelativePath": "uploads/but6.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\but6.jpg"
     }
   ]
 }

@@ -1,4 +1,4 @@
 public interface ICartServices{
-         Task<User> AddNewCart(List<CartItemDto> items);
-         Task<Cart> GetCart();
+         Task<Result<Cart>>  AddNewCart(List<CartItemDto> items);
+         Task<Result<Cart>> GetCart();
 }

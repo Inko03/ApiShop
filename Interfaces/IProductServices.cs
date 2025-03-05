@@ -1,6 +1,7 @@
 public interface IProductServices{
-    Task AddProductToDatabase(ProductUploadModel product);
-    Task DeletProduct(int id);
-    Task<List<ProductModel>> GetAllProduct();
-    Task<ProductModel> GetOneProduct(int id);
+    Task<Result<bool>> AddProductToDatabase(ProductUploadModel product);
+    Task<Result<bool>> DeletProduct(int id);
+    Task<Result<List<ProductModel>>> GetAllProduct();
+    Task<Result<ProductModel>> GetOneProduct(int id);
+    Task<Result<ProductModel>> Edit(ProductUploadModel product,int id);
 }

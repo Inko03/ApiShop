@@ -1,45 +1,61 @@
+using System.Reflection.Metadata.Ecma335;
+using System.Security.Authentication;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 public class UserServices:IUserServices{
-    private readonly DataBaseContext databaseContext;
-    private readonly IPasswordHasher<User> passwordHasher;
-    private readonly ITokenServices tokenServices;
-    public UserServices(DataBaseContext _dataBaseContext,ITokenServices _tokenServices, IPasswordHasher<User> _passwordHasher){
-        databaseContext = _dataBaseContext;
-        passwordHasher = _passwordHasher;
-        tokenServices = _tokenServices;
+    private readonly DataBaseContext _context;
+    private readonly IPasswordHasher<User> _passwordHasher;
+    private readonly ITokenServices _tokenServices;
+    private readonly IUserContextServices _userContextServices;
+    public UserServices(DataBaseContext dataBaseContext,ITokenServices tokenServices, IPasswordHasher<User> passwordHasher,IUserContextServices userContextServices){
+        _context = dataBaseContext;
+        _passwordHasher = passwordHasher;
+        _tokenServices = tokenServices;
+        _userContextServices = userContextServices;
     }
     public async Task<bool> UserIsInDb(string email){
 
         if(email!=null){
-            var result = await databaseContext.Users
+            var result = await _context.Users
             .FirstOrDefaultAsync(p=>p.Email==email);
             if(result!=null){
-                throw new UnauthorizedAccessException("User alredy in databse");
+                return false;
             }
         }
         return false;
 
     }
-    public async Task<bool> AddUserToDatabase(User user){
-        await UserIsInDb(user.Email);
-        var HashedPassword = passwordHasher.HashPassword(user,user.PasswordHash);
-        user.PasswordHash =  HashedPassword;
-        await databaseContext.Users.AddAsync(user);
-        await databaseContext.SaveChangesAsync();
-        return true;
-    }
-    public async Task<string> CheckedUserInDb(UserDto user){
-        var userInDb = await databaseContext.Users.FirstOrDefaultAsync(p=>p.Email==user.Email);
-        if(userInDb!=null){
-            var result = passwordHasher.VerifyHashedPassword(userInDb,userInDb.PasswordHash,user.PasswordHash);
-            if(result==PasswordVerificationResult.Failed){
-                throw new UnauthorizedAccessException("Wrong password");
-            }
-            var token = tokenServices.GenerateToken(userInDb.Name,userInDb.Id,userInDb.Role);
-            return token;
+    public async Task<Result<bool>> AddUserToDatabase(User user){
+        if(await UserIsInDb(user.Email)){
+            return Result<bool>.Failure("User alredy in databse");
         }
-        throw new UnauthorizedAccessException("No user in database or wrong email");
+
+        var HashedPassword = _passwordHasher.HashPassword(user,user.PasswordHash);
+        user.PasswordHash =  HashedPassword;
+        await _context.Users.AddAsync(user);
+        await _context.SaveChangesAsync();
+        return Result<bool>.Success(true);
+    }
+    public async Task<Result<string>> CheckedUserInDb(UserDto user){
+        var userInDb = await _context.Users.FirstOrDefaultAsync(p=>p.Email==user.Email);
+        if(userInDb!=null){
+            var result = _passwordHasher.VerifyHashedPassword(userInDb,userInDb.PasswordHash,user.PasswordHash);
+            if(result==PasswordVerificationResult.Failed){
+                return Result<string>.Failure("Wrong password");
+            }
+            var token = _tokenServices.GenerateToken(userInDb.Name,userInDb.Id,userInDb.Role);
+            return Result<string>.Success($"{token}");
+        }
+        return Result<string>.Failure("No user in database/or wrong email");
+    }
+    public async Task<Result<User>> GetUser(){
+        var userId = _userContextServices.GetUserId(); 
+        var userDb = await _context.Users.FirstOrDefaultAsync(o=>o.Id==userId);
+        if(userDb is null){
+            return Result<User>.Failure("No user in database");
+        }
+        return Result<User>.Success(userDb);
     }
 }

@@ -2,13 +2,12 @@ using System.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+[ApiController]
 [Route("/order")]
 public class OrderController:ControllerBase{
     private readonly IOrderServices _orderServices;
-    private readonly IMessageServices _messageServices;
-    public OrderController(IOrderServices orderServices,IMessageServices messageServices){
+    public OrderController(IOrderServices orderServices){
         _orderServices = orderServices;
-        _messageServices = messageServices;
     }
 
     /// <summary>
@@ -18,7 +17,10 @@ public class OrderController:ControllerBase{
     [HttpPost]
     public async Task<IActionResult> AddOrder([FromBody] Cart cart){
             var result = await _orderServices.AddOrder(cart);
-            return Ok(result);
+            if(!result.IsSuccess){
+                return BadRequest(result);
+            }
+            return Created();
     }
 
     /// <summary>
@@ -28,6 +30,9 @@ public class OrderController:ControllerBase{
     [HttpGet("{id}")]
     public async Task<IActionResult> GetOrder([FromRoute] int id){
         var result = await _orderServices.GetOrder(id);
+        if(!result.IsSuccess){
+            return NotFound(result);
+        }
         return Ok(result);
     }
 
@@ -38,6 +43,9 @@ public class OrderController:ControllerBase{
     [HttpGet("/orders")]
     public async Task<IActionResult> GetOrders(){
         var result = await _orderServices.GetOrders();
+        if(!result.IsSuccess){
+            return NotFound(result);
+        }
         return Ok(result);
     }
     
@@ -47,15 +55,11 @@ public class OrderController:ControllerBase{
     [Authorize(Roles = "Admin")]
     [HttpPost("{id}")]
     public async Task<IActionResult> EditOrderStatus([FromBody] UpdataOrderStatus dto,[FromRoute] int id){
-        if(!ModelState.IsValid){
-            var state = ModelState
-            .SelectMany(p=>p.Value.Errors)
-            .Select(p=>p.ErrorMessage)
-            .FirstOrDefault();
-            return BadRequest(_messageServices.Message("error", state)); 
-        }
         var result = await _orderServices.EditDataInDatabse(dto,id);
-        return Ok(result); 
+        if(!result.IsSuccess){
+            return NotFound(result);
+        }
+        return Ok(result);
     }
 
 }

@@ -19,6 +19,8 @@ public class ErrorMiddleware{
             KeyNotFoundException =>HttpStatusCode.NotFound,
             UnauthorizedAccessException=>HttpStatusCode.Unauthorized,
             InvalidDataException=>HttpStatusCode.Conflict,
+            NullReferenceException=>HttpStatusCode.NotFound,
+            InvalidOperationException=>HttpStatusCode.BadRequest,
             _=>HttpStatusCode.InternalServerError
         };
         context.Response.ContentType = "application/json";

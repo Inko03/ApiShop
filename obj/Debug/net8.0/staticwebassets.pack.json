@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\uploads\\BestWorld.png"
     },
     {
+      "Id": "c:\\Users\\aliry\\Desktop\\Projekty\\ApiShop\\wwwroot\\uploads\\but6.jpg",
+      "PackagePath": "staticwebassets\\uploads\\but6.jpg"
+    },
+    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.ApiShop.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

@@ -1,14 +1,16 @@
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiShop{
-    [Route("/items")]
+    [ApiController]
+    [Route("/cart")]
     public class CartController:ControllerBase{
-        private readonly ICartServices cartServices;
-        public CartController(ICartServices _cartServices){
-            cartServices = _cartServices;
+        private readonly ICartServices _cartServices;
+        public CartController(ICartServices cartServices){
+            _cartServices = cartServices;
         }
 
         /// <summary>
@@ -17,16 +19,24 @@ namespace ApiShop{
         [Authorize]
         [HttpPut]
         public async Task<IActionResult> NewShopCart ([FromBody] List<CartItemDto> items){
-            var result = await cartServices.AddNewCart(items);
+            var result = await _cartServices.AddNewCart(items);
+            if(!result.IsSuccess){
+                return NotFound(result);
+            }
             return Ok(result);
         }
         
         /// <summary>
         /// Return a full shopping cart
         /// </summary>
+        [Authorize]
         [HttpGet]
-        public IActionResult GetItems(){
-            return Ok();
+        public async Task<IActionResult> GetItems(){
+            var result = await _cartServices.GetCart();
+            if(!result.IsSuccess){
+                return NotFound(result);
+            }
+            return Ok(result);
         }
     }
 }

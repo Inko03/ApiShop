@@ -1,36 +1,45 @@
+using System.Data;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 
 public class OrderServices:IOrderServices{
     private readonly DataBaseContext _context;
-
-    public OrderServices(DataBaseContext context){
+     private readonly IUserContextServices _userContextServices;
+    public OrderServices(DataBaseContext context,IUserContextServices userContextServices){
         _context = context;
+        _userContextServices = userContextServices;
     }
-    public async Task<Orders> EditDataInDatabse(UpdataOrderStatus dto, int id){
+    public async Task<Result<Orders>> EditDataInDatabse(UpdataOrderStatus dto, int id){
         var dane = await _context.Orders
         .FirstOrDefaultAsync(p=>p.Id==id);
-        if(dane==null) throw new NullReferenceException("No product in database");
+        if(dane==null){
+            return Result<Orders>.Failure("No data in database");
+        }
         dane.Status = dto.status;
         await _context.SaveChangesAsync();
-        return dane;
+        return Result<Orders>.Success(dane);
     }
-    public async Task<List<Orders>> GetOrders(){
+    public async Task<Result<List<Orders>>> GetOrders(){
+        var userId = _userContextServices.GetUserId();
         var dane = await _context.Orders
-        .Where(p=>p.Id==Int32.Parse(ClaimTypes.NameIdentifier))
+        .Where(p=>p.UserId==userId)
         .ToListAsync();
-        return dane;
+        if(dane.Count<1){
+            return Result<List<Orders>>.Failure("No orders");
+        }
+        return Result<List<Orders>>.Success(dane);
     }
-    public async Task<Orders> GetOrder(int id){
+    public async Task<Result<Orders>> GetOrder(int id){
+        var userId = _userContextServices.GetUserId();
         var dane = await _context.Orders
-        .Where(o=>o.UserId==Int32.Parse(ClaimTypes.NameIdentifier))
+        .Where(o=>o.UserId==userId)
         .FirstOrDefaultAsync(o=>o.Id==id);
         if(dane is null){
-            throw new NullReferenceException("No such a order");
+            return Result<Orders>.Failure("No sucha order");
         }
-        return dane;
+        return Result<Orders>.Success(dane);;
     }
-    public async Task<Orders> AddOrder(Cart cart){
+    public async Task<Result<Orders>> AddOrder(Cart cart){
         var items = cart.CartItems;
         decimal totalPrice = 0;
         foreach (var item in items)
@@ -50,6 +59,6 @@ public class OrderServices:IOrderServices{
         };
         await _context.Orders.AddAsync(order);
         await _context.SaveChangesAsync();
-        return order;
+        return Result<Orders>.Success(order);
     }
 }

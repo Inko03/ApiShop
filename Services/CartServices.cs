@@ -4,18 +4,26 @@ using Microsoft.EntityFrameworkCore;
 
 public class CartServices:ICartServices{
     private readonly DataBaseContext _context;
+    private readonly IUserContextServices _userContextServices;
+
     
-    public CartServices(DataBaseContext context){
+    public CartServices(DataBaseContext context,IUserContextServices userContextServices){
         _context = context;
+        _userContextServices = userContextServices;
     }
 
-    public async Task<User> AddNewCart(List<CartItemDto> items){
+    public async Task<Result<Cart>> AddNewCart(List<CartItemDto> items){
+        var userId = _userContextServices.GetUserId();
+
         var user = await _context.Users
-        .FirstOrDefaultAsync(p=>p.Id==Int32.Parse(ClaimTypes.NameIdentifier));
-        if(user is null)throw new UnauthorizedAccessException("No user in database");
+        .FirstOrDefaultAsync(p=>p.Id==userId);
+        if(user is null){
+            return Result<Cart>.Failure("No user");
+        }
 
         var cart = new Cart{
-            UserId = Int32.Parse(ClaimTypes.NameIdentifier)
+            UserId = userId,
+            CartItems = new List<CartItem>()
         }; 
         foreach (var item in items){
             cart.CartItems.Add(new CartItem{
@@ -25,15 +33,16 @@ public class CartServices:ICartServices{
         }
         user.Carts.Add(cart);
         await _context.SaveChangesAsync();
-        return user;
+        return Result<Cart>.Success(cart);;
     }
     
-    public async Task<Cart> GetCart(){
+    public async Task<Result<Cart>> GetCart(){
+        var userId = _userContextServices.GetUserId(); 
         var result = await _context.Cart
-        .FirstOrDefaultAsync(p=>p.UserId==Int32.Parse(ClaimTypes.NameIdentifier));
+        .FirstOrDefaultAsync(p=>p.UserId==userId);
         if(result is null){
-            throw new NullReferenceException("No such a cart");
+            return Result<Cart>.Failure("No cart");
         }
-        return result; 
+        return Result<Cart>.Success(result);; 
     }
 }

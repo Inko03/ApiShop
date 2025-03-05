@@ -6,11 +6,9 @@ namespace ApiShop{
 [ApiController]
 [Route("products")]
     public class ProductsController:ControllerBase{
-        private readonly IProductServices _product;
-        private readonly IMessageServices _messageServices;
-        public ProductsController(IProductServices product, IMessageServices messageServices){
-            _product = product;
-            _messageServices = messageServices;
+        private readonly IProductServices _productService;
+        public ProductsController(IProductServices product){
+            _productService = product;
         }
 
         /// <summary>
@@ -18,8 +16,11 @@ namespace ApiShop{
         /// </summary>
         [HttpGet]
         public async  Task<IActionResult> GetProducts(){
-            var dane =  await _product.GetAllProduct();
-            return Ok(_messageServices.DataSender("succes", dane));
+            var dane =  await _productService.GetAllProduct();
+            if(!dane.IsSuccess){
+                return BadRequest(dane);
+            }
+            return Ok(dane);
         }
 
         /// <summary>
@@ -27,8 +28,11 @@ namespace ApiShop{
         /// </summary>
         [HttpGet("{id}")]
         public async  Task<IActionResult> GetProduct(int id){
-            var dane = await _product.GetOneProduct(id);
-            return Ok(new{status="succes", data=dane});
+            var result = await _productService.GetOneProduct(id);
+            if(!result.IsSuccess){
+                return NotFound(result);
+            }
+            return Ok(result);
         }
 
         /// <summary>
@@ -37,15 +41,11 @@ namespace ApiShop{
         [Authorize(Roles = "Admin")]
         [HttpPost("add")]
         public async Task<IActionResult> AddProduct([FromForm]ProductUploadModel product){
-            if(!ModelState.IsValid){
-                var state = ModelState
-                .SelectMany(p=>p.Value.Errors)
-                .Select(p=>p.ErrorMessage)
-                .FirstOrDefault();
-                return BadRequest(_messageServices.Message("error", state));
+            var result = await _productService.AddProductToDatabase(product);
+            if(!result.IsSuccess){
+                return BadRequest(result);
             }
-            await _product.AddProductToDatabase(product);
-            return Ok(_messageServices.Message("created", product.Name));
+            return Ok(result);
         }
 
         /// <summary>
@@ -54,8 +54,19 @@ namespace ApiShop{
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProductFromDataBase(int id){
-            await _product.DeletProduct(id);
+            var result = await _productService.DeletProduct(id);
+            if(!result.IsSuccess){
+               return NotFound(result);
+            }
             return NoContent();
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditProduct([FromForm]ProductUploadModel product,[FromRoute]int id){
+            var result =  await _productService.Edit(product,id);
+            if(!result.IsSuccess){
+               return NotFound(result);
+            }
+            return Ok(result);
         }
     }
 
